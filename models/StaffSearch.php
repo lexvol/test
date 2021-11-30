@@ -70,7 +70,7 @@ class StaffSearch extends Staff
             ->andFilterWhere(['like', 'last_name', $this->last_name])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'address', $this->address])
-            ->andFilterWhere(['like', 'department', $this->department]);
+            ->andFilterWhere(['in', 'department.id', $this->department]);
 
         return $dataProvider;
     }
