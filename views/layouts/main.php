@@ -38,7 +38,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             Yii::$app->user->isGuest ? (['label' => 'Сотрудники', 'url' => ['/staff']]) : (
-                    ['label' => 'Добавить/Удалить сотрудника', 'url' => ['/staff/index']]
+                    ['label' => 'Сотрудники', 'url' => ['/staff/index']]
             ),
 //            ['label' => 'Сотрудники', 'url' => ['/site/index']],
             ['label' => 'Отделы', 'url' => ['/department']],
