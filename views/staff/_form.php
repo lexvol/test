@@ -28,11 +28,8 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 
-    <?= Html::label('Отдел'); ?>
-
-    <?= Html::checkboxList('id_department[]', $selection = isset($selection) ? $selection : null,
-        ArrayHelper::map(Department::find()
-        ->all(), 'id', 'name')); ?>
+    <?= $form->field($model_dependency, 'id_department')->checkboxList(ArrayHelper::map(Department::find()
+            ->all(), 'id', 'name')) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
