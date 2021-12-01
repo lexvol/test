@@ -29,7 +29,7 @@ use yii\bootstrap4\ActiveForm;
     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model_dependency, 'id_department')->checkboxList(ArrayHelper::map(Department::find()
-            ->all(), 'id', 'name')) ?>
+            ->all(), 'id', 'name'), ['value' => isset($selection) ? $selection : null]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>

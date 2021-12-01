@@ -39,7 +39,6 @@ class Staff extends \yii\db\ActiveRecord
             [['first_name', 'patronymic', 'last_name'], 'string', 'max' => 50],
             ['email', 'email'],
             [['address'], 'string', 'max' => 255],
-            [['department'], 'string', 'max' => 255]
         ];
     }
 

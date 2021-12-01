@@ -116,10 +116,18 @@ class StaffController extends Controller
             $selection[] = $item['id_department'];
         }
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()
+                && $post = $this->request->post('Dependency')['id_department']) {
+                foreach ($post as $item) {
+                    $model_dependency = new Dependency();
+                    $model_dependency->id_department = $item;
+                    $model_dependency->id_staff = $model->id;
+                    $model_dependency->save();
+                }
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
         return $this->render('update', [
             'model' => $model,
             'model_dependency' => $model_dependency,
