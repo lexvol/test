@@ -119,7 +119,7 @@ class StaffController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()
                 && $post = $this->request->post('Dependency')['id_department']) {
-                Dependency::deleteAll($model->id);
+                Dependency::deleteAll(['id_staff' => $model->id]);
                 foreach ($post as $item) {
                     $model_dependency = new Dependency();
                     $model_dependency->id_department = $item;
