@@ -74,8 +74,7 @@ class StaffController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()
-                && $post = $this->request->post('Dependency')['id_department'])
-            {
+                && $post = $this->request->post('Dependency')['id_department']) {
                 foreach ($post as $item) {
                     $model_dependency = new Dependency();
                     $model_dependency->id_department = $item;
@@ -83,14 +82,8 @@ class StaffController extends Controller
                     $model_dependency->save();
                 }
                 return $this->redirect(['view', 'id' => $model->id]);
-
-            } else {
-                $model->loadDefaultValues();
-                $model_dependency->loadDefaultValues();
             }
         }
-
-
             return $this->render('create', [
                 'model' => $model,
                 'model_dependency' => $model_dependency,
