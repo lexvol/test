@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Class m211116_215422_create_dependencies_table
+ * Handles the creation of table `{{%dependency}}`.
  */
 class m211116_215422_create_dependencies_table extends Migration
 {
@@ -82,23 +82,6 @@ class m211116_215422_create_dependencies_table extends Migration
      */
     public function safeDown()
     {
-        echo "m211116_215422_create_dependencies_table cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('{{%dependency}}');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m211116_215422_create_dependencies_table cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }
