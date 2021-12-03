@@ -30,12 +30,13 @@ class Dependency extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_department'], 'required'],
-            [['id_staff'], 'integer'],
+            [['id_staff', 'id_department'], 'required'],
+            [['id_staff', 'id_department'], 'integer'],
             [['id_department'], 'exist', 'skipOnError' => true, 'targetClass' => Department::className(), 'targetAttribute' => ['id_department' => 'id']],
             [['id_staff'], 'exist', 'skipOnError' => true, 'targetClass' => Staff::className(), 'targetAttribute' => ['id_staff' => 'id']],
         ];
     }
+
 
     /**
      * {@inheritdoc}
