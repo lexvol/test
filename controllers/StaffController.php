@@ -104,21 +104,41 @@ class StaffController extends Controller
         $model = $this->findModel($id);
         $model_dependency = new Dependency();
         $selection = [];
-        $asd = Dependency::find()->where(['id_staff' => $id])->all();
-        foreach ($asd as $item){
+        $department_list = Dependency::find()->where(['id_staff' => $id])->all();
+        foreach ($department_list as $item){
             $selection[] = $item['id_department'];
         }
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()
+            if ($model->load($this->request->post())
                 && $post = $this->request->post('Dependency')['id_department']) {
-                Dependency::deleteAll(['id_staff' => $model->id]);
-                foreach ($post as $item) {
-                    $model_dependency = new Dependency();
-                    $model_dependency->id_department = $item;
-                    $model_dependency->id_staff = $model->id;
-                    $model_dependency->save();
-                }
+
+                $transaction = Yii::$app->db->beginTransaction();
+                    try {
+                        $model->save();
+                        $new_entry = array_diff($post, $selection);
+                        if ($new_entry) {
+                            foreach ($new_entry as $item) {
+                                $model_dependency = new Dependency();
+                                $model_dependency->id_staff = $model->id;
+                                $model_dependency->id_department = $item;
+                                $model_dependency->save();
+                            }
+                        }
+                        $old_entry = array_diff($selection, $post);
+                        if ($old_entry) {
+                            foreach ($old_entry as $item) {
+                                $model_dependency = Dependency::find()
+                                    ->where(['id_staff' => $model->id, 'id_department' => $item])
+                                    ->one();
+                                $model_dependency->delete();
+                            }
+                        }
+                        $transaction->commit();
+                    }
+                    catch (Exception $e){
+                        $transaction->rollBack();
+                    }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
